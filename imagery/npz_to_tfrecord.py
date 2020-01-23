@@ -82,8 +82,10 @@ def main(in_dir, out_dir):
                 files.append(os.path.join(r,file))
     with TFRecordExporter(out_dir, len(files)) as tfr:
         for f in files:
-            print(f)
-            img = np.load(f)["arr_0"][0,0:3].astype(np.uint8)
+            try:
+                img = np.load(f)["arr_0"][0,0:3].astype(np.uint8)
+            except Exception:
+                continue
             tfr.add_image(img)
             
         
